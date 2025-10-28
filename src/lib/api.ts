@@ -31,9 +31,11 @@ async function apiCall(endpoint: string, options: ApiOptions = {}) {
   }
 
   try {
-    // Remove leading slash from endpoint to avoid double slashes
-    const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
-    const response = await fetch(`${API_BASE_URL}/${cleanEndpoint}`, config);
+    // Ensure proper URL construction
+    const url = endpoint.startsWith('/') 
+      ? `${API_BASE_URL}${endpoint}` 
+      : `${API_BASE_URL}/${endpoint}`;
+    const response = await fetch(url, config);
     const data = await response.json();
 
     if (!response.ok) {
