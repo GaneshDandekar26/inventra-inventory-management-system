@@ -26,6 +26,11 @@ app.use(cors({
       return callback(null, true);
     }
     
+    // Allow Render URLs (frontend on Render)
+    if (origin.includes('onrender.com')) {
+      return callback(null, true);
+    }
+    
     // Allow specific production URL
     if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
       return callback(null, true);

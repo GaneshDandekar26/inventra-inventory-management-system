@@ -31,7 +31,9 @@ async function apiCall(endpoint: string, options: ApiOptions = {}) {
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    // Remove leading slash from endpoint to avoid double slashes
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+    const response = await fetch(`${API_BASE_URL}/${cleanEndpoint}`, config);
     const data = await response.json();
 
     if (!response.ok) {
